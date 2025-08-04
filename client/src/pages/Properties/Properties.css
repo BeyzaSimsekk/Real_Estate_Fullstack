@@ -1,0 +1,26 @@
+.properties-container{
+    gap: 2rem;
+}
+
+/*bu şekilde properties-container olduğunu da belli edince sadece properties sayfasındaki search bar ı değiştiriyorsun.
+
+*clamp: shortcut of min and max width in one row
+
+example: min: 12rem, default: 100%, max:28rem*/
+.properties-container .search-bar{
+    width: clamp(12rem, 100%, 28rem);
+    border-radius: 30px;
+    border: 1px solid rgba(120,120,120,0.374);
+    flex-wrap: nowrap;
+}
+
+.properties-container .search-bar .button{
+    border-radius: 30px;
+    font-size: 13px;
+    padding: 10px 15px;
+}
+
+.properties-container .search-bar input{
+    width: 70%;
+    font-size: 16px;
+}

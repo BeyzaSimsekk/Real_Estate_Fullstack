@@ -1,0 +1,47 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+//iki model var: properties & user (iki tablo gibi düşün)
+model User {
+    id               String      @id @default(auto()) @map("_id") @db.ObjectId
+    name             String?
+    email            String      @unique
+    image            String?
+    bookedVisits     Json[]
+    favResidenciesID String[]    @db.ObjectId
+    ownedResidencies Residency[] @relation("Owner")
+}
+
+/**
+ * AÇIKLAMA: model User*
+ * id: User collection ında "id" adında variable oluşturur.
+ * @default(auto()): id'yi otomatik olarak arttırır.
+ * @map("_id"): MongoDB'daki "_id" adında bir field'a dönüştürür.
+ * @db.ObjectId: MongoDB'daki ObjectId tipine dönüştürür.
+ * String: variable ın türünü belirtir.
+ * @id: MongoDB'daki id türünü belirtir.
+ */
+
+model Residency {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    description String
+    price       Int
+    address     String
+    city        String
+    country     String
+    image       String
+    facilities  Json
+    userEmail   String
+    owner       User     @relation("Owner", fields: [userEmail], references: [email])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@unique(fields: [address, userEmail])
+}
